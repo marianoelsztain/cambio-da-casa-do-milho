@@ -14,28 +14,37 @@ const setupEventHandlers = () => {
   const searchButton = document.querySelector('#search-button');
   searchButton.addEventListener('click', handleSearchEvent);
 
+  const clearButton = document.querySelector('#clear-button');
+  clearButton.addEventListener('click', clearList);
+
   const inputText = document.querySelector('#currency-input');
   inputText.addEventListener('keyup', (event) => {
-    if (event.keyCode === 13) {
-      handleSearchEvent();
-    }
+    if (event.keyCode === 13) handleSearchEvent();
+  });
+
+  const inputNumber = document.querySelector('#amount-input');
+  inputNumber.addEventListener('keyup', (event) => {
+    if (event.keyCode === 13) handleSearchEvent();
   });
 }
 
 const handleSearchEvent = () => {
   const currencyValue = document.querySelector('#currency-input').value;
+  const currencyAmount = document.querySelector('#amount-input').value;
 
   if (currencyValue === '') {
-    renderEmptyAlert()
+    renderEmptyAlert();
+  } else if (currencyAmount < 0) {
+    renderNegativeAlert();
   } else {
     clearList();
     fetchCurrency(currencyValue);
   }
 }
 
-const renderEmptyAlert = () => {
-  window.alert('Por favor, insira alguma moeda!');
-}
+const renderEmptyAlert = () => window.alert('Por favor, insira alguma moeda!');
+
+const renderNegativeAlert = () => window.alert('Por favor, insira um valor positivo!');
 
 const clearList = () => {
   const currencyList = document.querySelector('#currency-list');
@@ -63,7 +72,7 @@ const handleError = (errorMessage) => {
 }
 
 const handleRates = (rates) => {
-  const ratesKeys = Object.keys(rates);
+  const ratesKeys = Object.keys(rates).sort();
   
   ratesKeys.forEach((key) => {
     const value = rates[key];
@@ -73,10 +82,15 @@ const handleRates = (rates) => {
 
 const renderRate = (key, value) => {
   const currencyList = document.querySelector('#currency-list');
-  const formattedValue = value.toFixed(2);
+  const currencyMultiplier = document.querySelector('#amount-input').value;
+  const currencyChecker = document.querySelector('#currency-input').value;
+  const totalAmount = value * currencyMultiplier
+  const formattedValue = totalAmount.toFixed(2);
 
   const li = document.createElement('li');
-  li.innerHTML = `<b>${key}:</b> ${formattedValue}`;
+  if (currencyChecker !== key) {
+    li.innerHTML = `<b>${key}:</b> ${formattedValue}`;
 
-  currencyList.appendChild(li);
+    currencyList.appendChild(li);
+  }
 }

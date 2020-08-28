@@ -12,8 +12,16 @@
   </header>
 
   <section class="main-section">
-    <label for="currency-input">Digite a moeda:</label>
-    <input type="text" placeholder="USD" id="currency-input">
+    <div class="general-input">
+      <div class="input">
+        <label for="currency-input">Digite a moeda:</label>
+        <input type="text" placeholder="USD" id="currency-input">
+      </div>
+      <div class="input">
+        <label for="amount-input">Digite a quantidade:</label>
+        <input type="number"  name="amount-input" id="amount-input" value=1>
+      </div>
+    </div>
     <button id="search-button">Pesquisar</button>
     <button id="clear-button">Limpar</button>
     <ul id="currency-list"></ul>

@@ -40,6 +40,16 @@ li:nth-child(even) {
   text-align: center;
 }
 
+.general-input {
+  display: flex;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+
 .main-section label {
   background-color: #65d9fe;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
